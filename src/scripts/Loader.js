@@ -2,6 +2,10 @@ import { LoaderConfig } from "./LoaderConfig";
 import { Globals } from "./Globals";
 
 export class Loader {
+    /**
+     * 
+     * @param {PIXI.Application.loader} loader 
+     */
     constructor(loader) {
         this.loader = loader;
         this.resources = LoaderConfig;
@@ -16,7 +20,6 @@ export class Loader {
                 }
                 this.loader.load((loader, resources) => {
                     Globals.resources = resources;
-                    // console.log("Resources loaded !!", resources);
                     resolve();
                 });
             }
