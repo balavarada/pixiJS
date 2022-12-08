@@ -1,4 +1,5 @@
-
+# documentation
+https://pixijs.download/release/docs/index.html
 
 # Npm setup:
 
