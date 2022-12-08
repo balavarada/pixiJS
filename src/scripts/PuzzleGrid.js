@@ -7,6 +7,7 @@ export class PuzzleGrid {
         this.container = new PIXI.Container();
         this.container.x = window.innerWidth / 2;
         this.container.y = window.innerHeight / 2;
+        this.container.sortableChildren = true;
 
         this.createPuzzlePieces();
     }
@@ -17,7 +18,7 @@ export class PuzzleGrid {
         PuzzleGridConfig.forEach(field => {
 
             // Arrange the grid randomly
-            
+
             const random = Math.floor( Math.random() * ids.length ); // generate random no from 0 to 8 - ids.length = 9
             const id = ids[random];
             ids = ids.filter(item => item !== id); 

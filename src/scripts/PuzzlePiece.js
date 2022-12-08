@@ -4,14 +4,12 @@ import { Globals } from "./Globals";
 export class PuzzlePiece {
     constructor(id, field) {
         this.sprite = new PIXI.Sprite(Globals.resources[`puzzle${id}`].texture);
-        this.sprite.x = field.x;
-        this.sprite.y = field.y;
-
         this.sprite.anchor.set(0.5);
         this.sprite.scale.set(0.5);
 
         // adding interaction
         this.field = field;
+        this.reset();
         this.setInteractive();
     }
 
@@ -26,6 +24,7 @@ export class PuzzlePiece {
         //save position of the cursor
         this.touchPosition = {x: event.data.global.x, y: event.data.global.y};
         this.dragging = true;
+        this.sprite.zIndex = 1;
     }
 
     onTouchMove(event) {
@@ -49,6 +48,13 @@ export class PuzzlePiece {
 
     onTouchEnd() {
         this.dragging = false;
+        this.reset();
+        this.sprite.zIndex = 0;
+    }
+
+    reset() {
+        this.sprite.x = this.field.x;
+        this.sprite.y = this.field.y;
     }
 
 }
