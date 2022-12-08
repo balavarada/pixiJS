@@ -59,4 +59,24 @@ export class PuzzlePiece extends PIXI.utils.EventEmitter {
         this.sprite.y = this.field.y;
     }
 
+    get left() {
+        return this.sprite.x - this.sprite.width / 2;
+    }
+
+    get right() {
+        return this.sprite.x + this.sprite.width / 2;
+    }
+
+    get top() {
+        return this.sprite.y - this.sprite.height / 2;
+    }
+
+    get bottom() {
+        return this.sprite.y + this.sprite.height / 2;
+    }
+
+    setField(field) {
+        this.field = field;
+        this.reset();
+    }
 }

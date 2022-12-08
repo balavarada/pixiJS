@@ -31,6 +31,30 @@ export class PuzzleGrid {
     }
 
     onPieceDragEnd(piece) {
-        piece.reset();
+        const pieceToReplace = this.pieces.find(item =>
+             item !== piece &&
+             // Piece center to the right of left block
+             piece.sprite.x >= item.left &&
+             // Piece center to the right of left block
+             piece.sprite.x <= item.right &&
+             // Piece center below the  top side
+             piece.sprite.y <= item.bottom &&
+             // Piece center above the bottom block
+             piece.sprite.y >= item.top 
+                
+        );
+
+        // console.log(pieceToReplace);
+        
+        if(pieceToReplace) {
+            console.log(pieceToReplace);
+            // const replaceField = pieceToReplace.field;
+            // pieceToReplace.setField(piece.field);
+            // piece.setField(replaceField);
+ 
+        } else {
+            piece.reset();
+        }
+
     }
 }
