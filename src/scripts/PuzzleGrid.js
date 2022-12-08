@@ -13,20 +13,24 @@ export class PuzzleGrid {
     }
 
     createPuzzlePieces() {
-        // this.pieces = [];
+        this.pieces = [];
         let ids = PuzzleGridConfig.map(field => field.id);
         PuzzleGridConfig.forEach(field => {
-
             // Arrange the grid randomly
-
             const random = Math.floor( Math.random() * ids.length ); // generate random no from 0 to 8 - ids.length = 9
             const id = ids[random];
-            ids = ids.filter(item => item !== id); 
+            ids = ids.filter(item => item !== id);
+
 
             const piece = new PuzzlePiece(id, field);
+            piece.on("dragend", ()=> this.onPieceDragEnd(piece));
             this.container.addChild(piece.sprite);
-            // this.pieces.push(piece);
+            this.pieces.push(piece);
         })
 
+    }
+
+    onPieceDragEnd(piece) {
+        piece.reset();
     }
 }

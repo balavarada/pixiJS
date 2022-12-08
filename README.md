@@ -13,3 +13,6 @@ https://babeljs.io/ - old browser support
 
 # projet template - phaser 3
 https://github.com/photonstorm/phaser3-project-template
+
+# Event Emitter Github
+https://github.com/primus/eventemitter3
