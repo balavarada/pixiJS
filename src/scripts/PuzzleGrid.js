@@ -17,40 +17,37 @@ export class PuzzleGrid {
         let ids = PuzzleGridConfig.map(field => field.id);
         PuzzleGridConfig.forEach(field => {
             // Arrange the grid randomly
-            const random = Math.floor( Math.random() * ids.length ); // generate random no from 0 to 8 - ids.length = 9
+            const random = Math.floor(Math.random() * ids.length); // generate random no from 0 to 8 - ids.length = 9
             const id = ids[random];
             ids = ids.filter(item => item !== id);
 
 
             const piece = new PuzzlePiece(id, field);
-            piece.on("dragend", ()=> this.onPieceDragEnd(piece));
+            piece.on("dragend", () => this.onPieceDragEnd(piece));
             this.container.addChild(piece.sprite);
             this.pieces.push(piece);
-        })
-
+        });
     }
 
     onPieceDragEnd(piece) {
         const pieceToReplace = this.pieces.find(item =>
              item !== piece &&
-             // Piece center to the right of left block
+             // Piece center to the right of left side
              piece.sprite.x >= item.left &&
-             // Piece center to the right of left block
+             // Piece center to the right of left side
              piece.sprite.x <= item.right &&
              // Piece center below the  top side
              piece.sprite.y <= item.bottom &&
-             // Piece center above the bottom block
+             // Piece center above the bottom side
              piece.sprite.y >= item.top 
                 
         );
 
-        // console.log(pieceToReplace);
-        
         if(pieceToReplace) {
             console.log(pieceToReplace);
-            // const replaceField = pieceToReplace.field;
-            // pieceToReplace.setField(piece.field);
-            // piece.setField(replaceField);
+            const replaceField = pieceToReplace.field;
+            pieceToReplace.setField(piece.field);
+            piece.setField(replaceField);
  
         } else {
             piece.reset();

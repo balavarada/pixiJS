@@ -5,12 +5,13 @@ export class PuzzlePiece extends PIXI.utils.EventEmitter {
     constructor(id, field) {
         super();
         this.sprite = new PIXI.Sprite(Globals.resources[`puzzle${id}`].texture);
+        this.sprite.x = field.x;
+        this.sprite.y = field.y;
         this.sprite.anchor.set(0.5);
         this.sprite.scale.set(0.5);
-
+       
         // adding interaction
         this.field = field;
-        this.reset();
         this.setInteractive();
     }
 
@@ -18,14 +19,14 @@ export class PuzzlePiece extends PIXI.utils.EventEmitter {
         this.sprite.interactive = true;
         this.sprite.on("pointerdown", this.onTouchStart, this);
         this.sprite.on("pointermove", this.onTouchMove, this);
-        this.sprite.on("pointerout", this.onTouchEnd, this);
+        this.sprite.on("pointerup", this.onTouchEnd, this);
     }
 
     onTouchStart(event) {
         //save position of the cursor
         this.touchPosition = {x: event.data.global.x, y: event.data.global.y};
         this.dragging = true;
-        this.sprite.zIndex = 1;
+        this.sprite.zIndex = 2;
     }
 
     onTouchMove(event) {
@@ -49,8 +50,6 @@ export class PuzzlePiece extends PIXI.utils.EventEmitter {
 
     onTouchEnd() {
         this.dragging = false;
-        this.reset();
-        this.sprite.zIndex = 0;
         this.emit("dragend");
     }
 
