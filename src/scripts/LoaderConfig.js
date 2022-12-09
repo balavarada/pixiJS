@@ -9,4 +9,6 @@ export const LoaderConfig = {
      puzzle7 :  require("../sprites/7.jpg"),
      puzzle8 :  require("../sprites/8.jpg"),
      puzzle9 :  require("../sprites/9.jpg"),
+     click: require("../sounds/click.mp3"),
+     music: require("../sounds/music.mp3")
 };
