@@ -60,7 +60,7 @@ export class PuzzlePiece extends PIXI.utils.EventEmitter {
         // tween animations
         const tween = new TWEEN.Tween(this.sprite);
         tween.to({x: this.field.x, y:this.field.y}, 300);
-        tween.onStart(() => {
+        tween.onStart(() => { 
             this.sprite.zIndex = 1;
         });
         tween.onUpdate(() => {});
