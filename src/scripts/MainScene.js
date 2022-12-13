@@ -9,7 +9,7 @@ export class MainScene {
         this.createPuzzleGrid();
         Globals.resources.music.sound.play({
             loop:true,
-            volume:0.08
+            volume:0.9
         });
     }
 

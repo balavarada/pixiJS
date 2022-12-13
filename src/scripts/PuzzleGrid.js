@@ -14,7 +14,7 @@ export class PuzzleGrid {
 
     createPuzzlePieces() {
         this.pieces = [];
-        let ids = PuzzleGridConfig.map(field => field.id);
+        let ids = PuzzleGridConfig.map(field => field.id); // extract id alone
         PuzzleGridConfig.forEach(field => {
             // Arrange the grid randomly
             const random = Math.floor(Math.random() * ids.length); // generate random no from 0 to 8 - ids.length = 9
@@ -44,7 +44,6 @@ export class PuzzleGrid {
         );
 
         if(pieceToReplace) {
-            console.log(pieceToReplace);
             const replaceField = pieceToReplace.field;
             pieceToReplace.setField(piece.field);
             piece.setField(replaceField);

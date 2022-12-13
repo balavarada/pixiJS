@@ -1,16 +1,20 @@
 import * as PIXI from "pixi.js";
 import TWEEN from "@tweenjs/tween.js";
 import { Globals } from "./Globals";
-
+import { PuzzleGridConfig } from "./PuzzleGridConfig";
+var mirrorGrid = [];
+var sprites = [];
 export class PuzzlePiece extends PIXI.utils.EventEmitter {
     constructor(id, field) {
         super();
         this.sprite = new PIXI.Sprite(Globals.resources[`puzzle${id}`].texture);
+        this.sprite.id = id;
         this.sprite.x = field.x;
         this.sprite.y = field.y;
         this.sprite.anchor.set(0.5);
         this.sprite.scale.set(0.5);
-       
+        mirrorGrid.push({id:id, x:field.x,  y:field.y});
+        sprites.push(this.sprite);
         // adding interaction
         this.field = field;
         this.setInteractive();
@@ -66,6 +70,7 @@ export class PuzzlePiece extends PIXI.utils.EventEmitter {
         tween.onUpdate(() => {});
         tween.onComplete(() => {
             this.sprite.zIndex = 0;
+            this.checkCompleted();
         });
         tween.easing(TWEEN.Easing.Quartic.Out);
 
@@ -73,6 +78,7 @@ export class PuzzlePiece extends PIXI.utils.EventEmitter {
 
         this.sprite.x = this.field.x;
         this.sprite.y = this.field.y;
+        
     }
 
     get left() {
@@ -94,5 +100,69 @@ export class PuzzlePiece extends PIXI.utils.EventEmitter {
     setField(field) {
         this.field = field;
         this.reset();
+    }
+
+    checkCompleted() {       
+        let x =1800; //animation speed 
+        for (let i = 0, l = mirrorGrid.length; i < l; ++i) {
+            if (mirrorGrid[i].id === this.sprite.id) {
+                mirrorGrid[i].x = this.sprite.x;
+                mirrorGrid[i].y = this.sprite.y;
+                // console.log(mirrorGrid);
+              break;
+            }
+        }
+        mirrorGrid.sort((a,b) => a.id - b.id); //Sort array so identical to PuzzleGridConfig
+        const a = JSON.stringify(mirrorGrid);
+        const b = JSON.stringify(PuzzleGridConfig);
+        // game completed state
+        if(a == b) {
+            //reduce all space b/w the sprites
+            ;
+            for (let j = 0, l = sprites.length; j < l; ++j) {
+                sprites[j].interactive = false;
+                const tween = new TWEEN.Tween(sprites[j]);
+                tween.easing(TWEEN.Easing.Circular.Out);
+                switch(sprites[j].id) {
+                    case 1:
+                        tween.to({x: -150, y:-150}, x);
+                        // sprites[j].x = -150;
+                        // sprites[j].y = -150;
+                    break;
+                    case 2:
+                        tween.to({x: 0, y:-150}, x);
+                        // sprites[j].y = -150;
+                    break;
+                    case 3:
+                        tween.to({x: 150, y:-150}, x);
+                        // sprites[j].x = 150;
+                        // sprites[j].y = -150;
+                    break;
+                    case 4:
+                        tween.to({x: -150, y:0}, x);
+                        // sprites[j].x = -150;
+                    break;
+                    case 6:
+                        tween.to({x: 150, y:0}, x);
+                        // sprites[j].x = 150;
+                    break;
+                    case 7:
+                        tween.to({x: -150, y:150}, x);
+                        sprites[j].x = -150;
+                        sprites[j].y = 150;
+                    break;
+                    case 8:
+                        tween.to({x: 0, y:150}, x);
+                        // sprites[j].y = 150;
+                    break;
+                    case 9:
+                        tween.to({x: 150, y:150}, x);
+                        // sprites[j].x = 150;
+                        // sprites[j].y = 150;
+                    break;
+                }
+                tween.start();
+            }
+        }
     }
 }
