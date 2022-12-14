@@ -103,7 +103,7 @@ export class PuzzlePiece extends PIXI.utils.EventEmitter {
     }
 
     checkCompleted() {       
-        let x =1800; //animation speed 
+        let x =1000; //animation speed 
         for (let i = 0, l = mirrorGrid.length; i < l; ++i) {
             if (mirrorGrid[i].id === this.sprite.id) {
                 mirrorGrid[i].x = this.sprite.x;

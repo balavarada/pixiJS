@@ -14,7 +14,6 @@ export class MainScene {
     }
 
     createBckground() {
-        console.log(this.Globals);
         this.bg = new PIXI.Sprite(Globals.resources["bg"].texture);
         
         // available methods
@@ -25,8 +24,7 @@ export class MainScene {
         this.bg.tint = 0xffffff; // this is white color - check 0xff0000 for red tint color
         this.bg.width = window.innerWidth;
         this.bg.height = window.innerHeight;
-        this.container.addChild(this.bg);
-        
+        this.container.addChild(this.bg);        
     }
 
     createPuzzleGrid() {
